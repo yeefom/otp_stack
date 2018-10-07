@@ -9,4 +9,8 @@ defmodule Stack.Server do
     { popped, new_stack } = List.pop_at(stack, -1)
     { :reply, popped, new_stack}
   end
+
+  def handle_cast({ :push, item }, stack) do
+    { :noreply, stack ++ [item] }
+  end
 end
