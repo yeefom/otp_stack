@@ -6,11 +6,11 @@ defmodule Stack.Server do
   end
 
   def handle_call(:pop, _from, stack) do
-    { popped, new_stack } = List.pop_at(stack, -1)
-    { :reply, popped, new_stack}
+    { popped, new_stack } = List.pop_at(stack, 0)
+    { :reply, popped, new_stack }
   end
 
   def handle_cast({ :push, item }, stack) do
-    { :noreply, stack ++ [item] }
+    { :noreply, [ item | stack ] }
   end
 end
