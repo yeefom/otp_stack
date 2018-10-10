@@ -3,10 +3,11 @@ defmodule Stack.Application do
 
   def start(_type, stack) do
     children = [
-      { Stack.Server, stack }
+      { Stack.Stash, stack },
+      { Stack.Server, nil }
     ]
 
-    options = [strategy: :one_for_one, name: Stack.Supervisor]
+    options = [strategy: :rest_for_one, name: Stack.Supervisor]
 
     Supervisor.start_link(children, options)
   end

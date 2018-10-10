@@ -4,8 +4,8 @@ defmodule Stack.Server do
 
   @server __MODULE__
 
-  def start_link(stack \\ []) do
-    GenServer.start_link(@server, stack, name: @server)
+  def start_link(_) do
+    GenServer.start_link(@server, nil, name: @server)
   end
 
   def pop() do
@@ -18,8 +18,8 @@ defmodule Stack.Server do
 
   # server implementation
 
-  def init(stack) do
-    { :ok, stack }
+  def init(_) do
+    { :ok, Stack.Stash.get() }
   end
 
   def handle_call(:pop, _from, stack) do
@@ -31,7 +31,8 @@ defmodule Stack.Server do
     { :noreply, Impl.push(stack, item) }
   end
 
-  def terminate(reason, _stack) do
+  def terminate(reason, stack) do
+    Stack.Stash.update(stack)
     { :reply, reason }
   end
 end

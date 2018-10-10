@@ -3,7 +3,7 @@ defmodule Stack.Stash do
 
   @server __MODULE__
 
-  def start_link(init_data \\ []) do
+  def start_link(init_data) do
     GenServer.start_link(@server, init_data, name: @server)
   end
 
